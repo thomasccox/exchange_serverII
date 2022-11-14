@@ -41,8 +41,8 @@ def process_order(order, match=None):
             profit = match.sell - child_sell
             child = match
         elif match.buy_amount < _order.sell_amount:
-            child_sell =  _order.sell_amount - match.buy_amount
-            child_buy = (_order.sell_amount - match.buy_amount)*(order.buy_amount/order.sell_amount)
+            child_sell = _order.sell_amount - match.buy_amount
+            child_buy = (_order.sell_amount - match.buy_amount)*(_order.buy_amount/_order.sell_amount)
             child = _order
         if match.buy_amount != _order.sell_amount:
             child_order = {}

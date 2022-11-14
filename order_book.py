@@ -35,8 +35,9 @@ def find_match(order):
     buy_currency = order['buy_currency']
     potential_matches = session.query(Order).filter(Order.filled is None, Order.buy_currency == sell_currency,
                                                     Order.sell_currency == buy_currency)
-    print("test")
+    #print("test")
     for o in potential_matches:
+        print("test")
         if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
 
             return o

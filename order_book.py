@@ -12,7 +12,7 @@ session = DBSession()
 
 def process_order(order):
     # Your code here
-    print("test")
+    #print("test")
     # May not be necessary
     fields = ['sender_pk', 'receiver_pk', 'buy_currency', 'sell_currency', 'buy_amount', 'sell_amount']
     order_obj = Order(**{f: order[f] for f in fields})
@@ -35,6 +35,7 @@ def find_match(order):
     buy_currency = order['buy_currency']
     potential_matches = session.query(Order).filter(Order.filled is None, Order.buy_currency == sell_currency,
                                                     Order.sell_currency == buy_currency)
+    print("test")
     for o in potential_matches:
         if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
 

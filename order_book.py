@@ -23,6 +23,7 @@ def process_order(order):
     #print(order_obj.sell_amount)
 
     match = find_match(order)
+    print(match.id)
     if match is not None:
         #print("test")
         '''

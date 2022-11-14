@@ -24,8 +24,11 @@ def process_order(order):
 
     match = find_match(order)
     #print(match.id)
-    if match is None:
-        print("test")
+    if match is not None:
+        print("Match")
+
+    else:
+        print("No Match")
         '''
         tstamp = datetime
         order['filled'] = tstamp

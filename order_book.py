@@ -10,7 +10,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-def process_order(order):
+def process_order(order, match=None):
     # Your code here
     # print("test")
     # May not be necessary
@@ -34,9 +34,35 @@ def process_order(order):
         match.filled = tstamp
         _order.counterpart_id = match.id
         match.counterpart_id = _order.id
+
+        if match.buy_amount > _order.sell_amount:
+            child_buy = match.buy_amount - _order.sell_amount
+            child_sell = (match.sell_amount/match.buy_amount)*(match.buy-_order.sell)
+            profit = match.sell - child_sell
+            child = match
+        elif match.buy_amount < _order.sell_amount:
+            child_sell =  _order.sell_amount - match.buy_amount
+            child_buy = (_order.sell_amount - match.buy_amount)*(order.buy_amount/order.sell_amount)
+            child = _order
+        if match.buy_amount != _order.sell_amount:
+            child_order = {}
+            child_order['sender_pk'] = child.sender_pk
+            child_order['receiver_pk'] = child.receiver_pk
+            child_order['buy_currency'] = child.buy_currency
+            child_order['sell_currency'] = child.sell_currency
+            child_order['buy_amount'] = child_buy
+            child_order['sell_amount'] = child_sell
+            fields = ['sender_pk', 'receiver_pk', 'buy_currency', 'sell_currency', 'buy_amount', 'sell_amount']
+            child_obj = Order(**{f: child_order[f] for f in fields})
+
+            session.add(child_obj)
+            session.commit()
+
+
         session.commit()
         #test_order = session.get(Order, order_obj.id)
         #print(test_order.counterpart_id)
+
 
 
 
@@ -53,5 +79,5 @@ def find_match(order):
             #print(o.filled)
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
-                break
+                #break
     return None

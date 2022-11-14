@@ -42,7 +42,7 @@ def find_match(order):
     # print("test")
     for o in potential_matches:
         print(o.id)
-        if o.filled is None:
+        if o.filled is not None:
             print(o.filled)
         if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
             return o

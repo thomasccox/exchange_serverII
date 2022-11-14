@@ -22,7 +22,7 @@ def process_order(order):
 
     match = find_match(order)
     if match != None:
-        tstamp = datetime.timezone.utc
+        tstamp = datetime
         order.filled = tstamp
         match.filled = tstamp
         order.counterparty_id = match.id
@@ -38,8 +38,7 @@ def find_match(order):
     potential_matches = session.query(Order).all()
     #print("test")
     for o in potential_matches:
-        print("test")
+        print(o.filled)
         if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
-
             return o
     return None

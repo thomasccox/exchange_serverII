@@ -28,12 +28,13 @@ def process_order(order):
         #print('\n')
         #print("Match")
         _order = session.get(Order, order_obj.id)
-        _match = session.get(Order, match.id)
+        #_match = session.get(Order, match.id)
         tstamp = datetime.now()
         _order.filled = tstamp
-        _match.filled = tstamp
+        match.filled = tstamp
         _order.counterpart_id = match.id
-        _match.counterpart_id = _order.id
+        match.counterpart_id = _order.id
+        session.commit()
         #test_order = session.get(Order, order_obj.id)
         #print(test_order.counterpart_id)
 

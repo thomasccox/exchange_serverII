@@ -46,6 +46,7 @@ def process_order(order, match=None):
             child = _order
         if match.buy_amount != _order.sell_amount:
             child_order = {}
+            child_order['creator_id'] = child.id
             child_order['sender_pk'] = child.sender_pk
             child_order['receiver_pk'] = child.receiver_pk
             child_order['buy_currency'] = child.buy_currency

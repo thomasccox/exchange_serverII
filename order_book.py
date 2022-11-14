@@ -23,7 +23,7 @@ def process_order(order):
     #print(order_obj.sell_amount)
 
     match = find_match(order)
-    if match != None:
+    if match is None:
         print("test")
         '''
         tstamp = datetime

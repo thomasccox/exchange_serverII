@@ -56,7 +56,7 @@ def process_order(order, match=None):
             child_obj = Order(**{f: child_order[f] for f in fields})
 
             session.add(child_obj)
-            session.commit()
+    session.commit()
 
 
         session.commit()

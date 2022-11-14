@@ -36,7 +36,7 @@ def process_order(order):
 def find_match(order):
     sell_currency = order['sell_currency']
     buy_currency = order['buy_currency']
-    potential_matches = session.query(Order).filter(Order.filled == "", Order.buy_currency == sell_currency,
+    potential_matches = session.query(Order).filter(Order.buy_currency == sell_currency,
                                                     Order.sell_currency == buy_currency).all()
     #potential_matches = session.query(Order).all()
     # print("test")

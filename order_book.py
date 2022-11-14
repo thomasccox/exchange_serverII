@@ -28,7 +28,7 @@ def process_order(order):
         #print('\n')
         #print("Match")
         _order = session.get(Order, order_obj.id)
-        tstamp = datetime
+        tstamp = datetime.time()
         _order.filled = tstamp
         match.filled = tstamp
         _order.counterpart_id = match.id

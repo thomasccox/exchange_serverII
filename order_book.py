@@ -39,13 +39,6 @@ def process_order(order):
         #print(test_order.counterpart_id)
 
 
-    else:
-        #print('\n')
-        #print("No Match")
-        '''
-
-        '''
-
 
 def find_match(order):
     sell_currency = order['sell_currency']
@@ -60,4 +53,5 @@ def find_match(order):
             #print(o.filled)
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
+                break
     return None

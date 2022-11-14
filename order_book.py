@@ -19,6 +19,7 @@ def process_order(order):
 
     session.add(order_obj)
     session.commit()
+    print(order_obj.id)
 
     match = find_match(order)
     if match != None:

@@ -31,7 +31,7 @@ def process_order(order):
         #tstamp = datetime.now()
         #_order.filled = tstamp
         #match.filled = tstamp
-        _order.counterpart_id = match.id
+        #_order.counterpart_id = match.id
         match.counterpart_id = _order.id
         test_order = session.get(Order, order_obj.id)
         print(test_order.counterpart_id)

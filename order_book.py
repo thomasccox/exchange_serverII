@@ -19,24 +19,28 @@ def process_order(order):
 
     session.add(order_obj)
     session.commit()
-    # print(order_obj.id)
+    #print(order_obj.id)
     #print(order_obj.sell_amount)
 
     match = find_match(order)
     #print(match.id)
     if match is not None:
-        print('\n')
-        print("Match")
+        #print('\n')
+        #print("Match")
+        _order = session.get(Order, order_obj.id)
+        tstamp = datetime
+        _order.filled = tstamp
+        match.filled = tstamp
+        _order.counterpart_id = match.id
+        match.counterpart_id = _order.id
+
+
 
     else:
-        print('\n')
-        print("No Match")
+        #print('\n')
+        #print("No Match")
         '''
-        tstamp = datetime
-        order['filled'] = tstamp
-        match.filled = tstamp
-        order['counterparty_id'] = match.id
-        #match.counterpart_id = orderid
+
         '''
 
 

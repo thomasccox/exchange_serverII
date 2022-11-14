@@ -24,7 +24,7 @@ def process_order(order):
 
     match = find_match(order)
     if match is not None:
-        print("test")
+        #print("test")
         '''
         tstamp = datetime
         order['filled'] = tstamp

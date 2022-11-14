@@ -38,8 +38,8 @@ def find_match(order):
     potential_matches = session.query(Order).all()
     #print("test")
     for o in potential_matches:
-        print(o.id)
-        print(o.filled)
+        #print(o.id)
+        #print(o.filled)
         if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
             return o
     return None

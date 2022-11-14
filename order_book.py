@@ -33,7 +33,8 @@ def process_order(order):
         #match.filled = tstamp
         _order.counterpart_id = match.id
         match.counterpart_id = _order.id
-
+        test_order = session.get(Order, order_obj.id)
+        print(test_order.counterpart_id)
 
 
     else:

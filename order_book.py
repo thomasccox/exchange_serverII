@@ -26,7 +26,7 @@ def process_order(order):
         order['filled'] = tstamp
         match.filled = tstamp
         order['counterparty_id'] = match.id
-        match.counterpart_id = order.id
+        #match.counterpart_id = orderid
 
 
 

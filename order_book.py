@@ -24,6 +24,7 @@ def process_order(order):
 
     match = find_match(order)
     if match != None:
+        print("test")
         '''
         tstamp = datetime
         order['filled'] = tstamp
@@ -41,9 +42,9 @@ def find_match(order):
     #potential_matches = session.query(Order).all()
     # print("test")
     for o in potential_matches:
-        print(o.id)
+        #print(o.id)
         if o.filled is None:
-            print(o.filled)
-        if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
-            return o
+            #print(o.filled)
+            if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
+                return o
     return None

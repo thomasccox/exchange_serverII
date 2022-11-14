@@ -27,7 +27,7 @@ def process_order(order):
         match.filled = tstamp
         order.counterparty_id = match.id
         match.counterpart_id = order.id
-        
+
 
 
 def find_match(order):

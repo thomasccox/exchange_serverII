@@ -20,7 +20,7 @@ def process_order(order):
     session.add(order_obj)
     session.commit()
     # print(order_obj.id)
-    print(order_obj.sell_amount)
+    #print(order_obj.sell_amount)
 
     match = find_match(order)
     if match != None:

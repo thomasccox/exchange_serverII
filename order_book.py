@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
@@ -32,8 +32,8 @@ def process_order(order, match=None):
         tstamp = datetime.now()
         _order.filled = tstamp
         match.filled = tstamp
-        _order.counterpart_id = match.id
-        match.counterpart_id = _order.id
+        _order.counterpart_id = ForeignKey(match.id)
+        match.counterpart_id = ForeignKey(_order.id)
 
         if match.buy_amount > _order.sell_amount:
             child_buy = match.buy_amount - _order.sell_amount
@@ -57,9 +57,6 @@ def process_order(order, match=None):
             child_obj = Order(**{f: child_order[f] for f in fields})
 
             session.add(child_obj)
-
-        session.commit()
-
 
         session.commit()
         #test_order = session.get(Order, order_obj.id)

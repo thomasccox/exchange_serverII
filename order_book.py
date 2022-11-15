@@ -42,7 +42,7 @@ def process_order(order, match=None):
             child_sell = (match.sell_amount/match.buy_amount)*(match.buy_amount-order_obj.sell_amount)
             #profit = match.sell_amount - child_sell
             child = match
-        elif match.buy_amount < order.sell_amount:
+        elif match.buy_amount < order_obj.sell_amount:
             child_sell = order_obj.sell_amount - match.buy_amount
             child_buy = (order_obj.sell_amount - match.buy_amount)*(order_obj.buy_amount/order_obj.sell_amount)
             child = order_obj

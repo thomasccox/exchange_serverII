@@ -27,7 +27,7 @@ def process_order(order, match=None):
         tstamp = datetime.now()
         order_obj.filled = tstamp
         if(order_obj.fille == tstamp):
-            prting("test")
+            print("test")
         existing.filled = tstamp
 
         if existing.buy_amount > order_obj.sell_amount:

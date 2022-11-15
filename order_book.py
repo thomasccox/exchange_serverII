@@ -27,7 +27,7 @@ def process_order(order, match=None):
         session.commit()
         existing.counterpart_id = order_obj.id
         existing.counterparty.append(order_obj)
-        #session.commit()
+        # session.commit()
         tstamp = datetime.now()
         order_obj.filled = tstamp
         existing.filled = tstamp
@@ -37,7 +37,9 @@ def process_order(order, match=None):
             child_buy = existing.buy_amount - order_obj.sell_amount
             child_sell = (existing.sell_amount / existing.buy_amount) * (existing.buy_amount - order_obj.sell_amount)
             child = existing
-            add_child(child, child_buy, child_sell)
+            child_obj = add_child(child, child_buy, child_sell)
+            existing.child.append(child_obj)
+            session.commit()
         """    
         elif existing.buy_amount < order_obj.sell_amount:
             child_sell = order_obj.sell_amount - existing.buy_amount
@@ -48,10 +50,9 @@ def process_order(order, match=None):
             child_buy = order_obj.buy_amount - existing.sell_amount
             child_sell = (order_obj.sell_amount / order_obj.buy_amount) * (order_obj.buy_amount - existing.sell_amount)
             child = order_obj
-            add_child(child, child_buy, child_sell)
-
-
-
+            child_obj = add_child(child, child_buy, child_sell)
+            order_obj.child.append(child_obj)
+            session.commit()
 
 def find_match(order):
     sell_currency = order['sell_currency']
@@ -64,6 +65,7 @@ def find_match(order):
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
     return None
+
 
 def add_child(child, buy, sell):
     child_order = {}
@@ -78,3 +80,4 @@ def add_child(child, buy, sell):
     child_obj = Order(**{f: child_order[f] for f in fields})
     session.add(child_obj)
     session.commit()
+    return child_obj

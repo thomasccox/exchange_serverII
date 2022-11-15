@@ -18,26 +18,26 @@ def process_order(order, match=None):
     session.add(order_obj)
     session.commit()
 
-    match = find_match(order)
+    existing = find_match(order)
 
-    if match is not None:
+    if existing is not None:
 
-        order_obj.counterpart_id = match.id
-        match.counterpart_id = order_obj.id
+        order_obj.counterpart_id = existing.id
+        existing.counterpart_id = order_obj.id
         tstamp = datetime.now()
         order_obj.filled = tstamp
-        match.filled = tstamp
+        existing.filled = tstamp
 
-        if match.buy_amount > order_obj.sell_amount:
-            child_buy = match.buy_amount - order_obj.sell_amount
-            child_sell = (match.sell_amount / match.buy_amount) * (match.buy_amount - order_obj.sell_amount)
-            child = match
-        elif match.buy_amount < order_obj.sell_amount:
-            child_sell = order_obj.sell_amount - match.buy_amount
-            child_buy = (order_obj.sell_amount - match.buy_amount) * (order_obj.buy_amount / order_obj.sell_amount)
+        if existing.buy_amount > order_obj.sell_amount:
+            child_buy = existing.buy_amount - order_obj.sell_amount
+            child_sell = (existing.sell_amount / existing.buy_amount) * (existing.buy_amount - order_obj.sell_amount)
+            child = existing
+        elif existing.buy_amount < order_obj.sell_amount:
+            child_sell = order_obj.sell_amount - existing.buy_amount
+            child_buy = (order_obj.sell_amount - existing.buy_amount) * (order_obj.buy_amount / order_obj.sell_amount)
             child = order_obj
 
-        if match.buy_amount != order_obj.sell_amount:
+        if existing.buy_amount != order_obj.sell_amount:
             child_order = {}
             child_order['creator_id'] = child.id
             child_order['sender_pk'] = child.sender_pk

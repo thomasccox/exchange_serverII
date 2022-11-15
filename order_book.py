@@ -26,7 +26,7 @@ def process_order(order, match=None):
         existing.counterpart_id = order_obj.id
         tstamp = datetime.now()
         order_obj.filled = tstamp
-        if(order_obj.fille == tstamp):
+        if(order_obj.filled == tstamp):
             print("test")
         existing.filled = tstamp
 

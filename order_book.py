@@ -19,7 +19,7 @@ def process_order(order, match=None):
     session.commit()
 
     match = find_match(order)
-    """
+
     if match is not None:
 
         tstamp = datetime.now()
@@ -27,7 +27,7 @@ def process_order(order, match=None):
         match.filled = tstamp
         order_obj.counterpart_id = match.id
         match.counterpart_id = order_obj.id
-
+"""
         if match.buy_amount > order_obj.sell_amount:
             child_buy = match.buy_amount - order_obj.sell_amount
             child_sell = (match.sell_amount / match.buy_amount) * (match.buy_amount - order_obj.sell_amount)

@@ -25,8 +25,10 @@ def process_order(order, match=None):
         order_obj.counterpart_id = existing.id
         existing.counterpart_id = order_obj.id
         tstamp = datetime.now()
-        print(order_obj.filled.type())
-        #existing.filled = tstamp
+        order_obj.filled = tstamp
+        if(order_obj.fille == tstamp):
+            prting("test")
+        existing.filled = tstamp
 
         if existing.buy_amount > order_obj.sell_amount:
             child_buy = existing.buy_amount - order_obj.sell_amount

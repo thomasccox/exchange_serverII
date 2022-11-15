@@ -30,23 +30,23 @@ def process_order(order, match=None):
         #_order = session.get(Order, order_obj.id)
         #_match = session.get(Order, match.id)
         tstamp = datetime.now()
-        order.filled = tstamp
+        order_obj.filled = tstamp
         match.filled = tstamp
-        order.counterpart_id = match.id
+        order_obj.counterpart_id = match.id
         #_order.counterparty.append(match.id)
-        match.counterpart_id = order.id
+        match.counterpart_id = order_obj.id
         #match.counterparty.append(_order.id)
 
-        if match.buy_amount > order.sell_amount:
-            child_buy = match.buy_amount - order.sell_amount
-            child_sell = (match.sell_amount/match.buy_amount)*(match.buy_amount-order.sell_amount)
+        if match.buy_amount > order_obj.sell_amount:
+            child_buy = match.buy_amount - order_obj.sell_amount
+            child_sell = (match.sell_amount/match.buy_amount)*(match.buy_amount-order_obj.sell_amount)
             #profit = match.sell_amount - child_sell
             child = match
         elif match.buy_amount < order.sell_amount:
-            child_sell = order.sell_amount - match.buy_amount
-            child_buy = (order.sell_amount - match.buy_amount)*(order.buy_amount/order.sell_amount)
-            child = order
-        if match.buy_amount != order.sell_amount:
+            child_sell = order_obj.sell_amount - match.buy_amount
+            child_buy = (order_obj.sell_amount - match.buy_amount)*(order_obj.buy_amount/order_obj.sell_amount)
+            child = order_obj
+        if match.buy_amount != order_obj.sell_amount:
             child_order = {}
             child_order['creator_id'] = child.id
             child_order['sender_pk'] = child.sender_pk

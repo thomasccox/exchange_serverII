@@ -24,6 +24,7 @@ def process_order(order, match=None):
 
         order_obj.counterpart_id = existing.id
         order_obj.counterparty.append(existing)
+        session.commit()
         existing.counterpart_id = order_obj.id
         existing.counterparty.append(order_obj)
         #session.commit()

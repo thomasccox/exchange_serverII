@@ -12,39 +12,28 @@ session = DBSession()
 
 def process_order(order, match=None):
     # Your code here
-    # print("test")
-    # May not be necessary
     fields = ['sender_pk', 'receiver_pk', 'buy_currency', 'sell_currency', 'buy_amount', 'sell_amount']
     order_obj = Order(**{f: order[f] for f in fields})
 
     session.add(order_obj)
     session.commit()
-    #print(order_obj.id)
-    #print(order_obj.sell_amount)
 
     match = find_match(order)
-    #print(match.id)
     if match is not None:
-        #print('\n')
-        #print("Match")
-        #_order = session.get(Order, order_obj.id)
-        #_match = session.get(Order, match.id)
+
         tstamp = datetime.now()
         order_obj.filled = tstamp
         match.filled = tstamp
         order_obj.counterpart_id = match.id
-        #_order.counterparty.append(match.id)
         match.counterpart_id = order_obj.id
-        #match.counterparty.append(_order.id)
 
         if match.buy_amount > order_obj.sell_amount:
             child_buy = match.buy_amount - order_obj.sell_amount
-            child_sell = (match.sell_amount/match.buy_amount)*(match.buy_amount-order_obj.sell_amount)
-            #profit = match.sell_amount - child_sell
+            child_sell = (match.sell_amount / match.buy_amount) * (match.buy_amount - order_obj.sell_amount)
             child = match
         elif match.buy_amount < order_obj.sell_amount:
             child_sell = order_obj.sell_amount - match.buy_amount
-            child_buy = (order_obj.sell_amount - match.buy_amount)*(order_obj.buy_amount/order_obj.sell_amount)
+            child_buy = (order_obj.sell_amount - match.buy_amount) * (order_obj.buy_amount / order_obj.sell_amount)
             child = order_obj
         if match.buy_amount != order_obj.sell_amount:
             child_order = {}
@@ -61,10 +50,6 @@ def process_order(order, match=None):
             session.add(child_obj)
 
         session.commit()
-        #test_order = session.get(Order, order_obj.id)
-        #print(test_order.counterpart_id)
-
-
 
 
 def find_match(order):
@@ -72,13 +57,9 @@ def find_match(order):
     buy_currency = order['buy_currency']
     potential_matches = session.query(Order).filter(Order.buy_currency == sell_currency,
                                                     Order.sell_currency == buy_currency).all()
-    #potential_matches = session.query(Order).all()
-    # print("test")
+
     for o in potential_matches:
-        #print(o.id)
         if o.filled is None:
-            #print(o.filled)
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
-                #break
     return None

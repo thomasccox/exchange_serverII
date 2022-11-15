@@ -33,9 +33,10 @@ def process_order(order, match=None):
         _order.filled = tstamp
         match.filled = tstamp
         _order.counterpart_id = match.id
-        _order.counterparty.append(match.id)
+        #_order.counterparty.append(match.id)
         match.counterpart_id = _order.id
-        match.counterparty.append(_order.id)
+        #match.counterparty.append(_order.id)
+
         if match.buy_amount > _order.sell_amount:
             child_buy = match.buy_amount - _order.sell_amount
             child_sell = (match.sell_amount/match.buy_amount)*(match.buy_amount-_order.sell_amount)

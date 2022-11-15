@@ -19,7 +19,6 @@ def process_order(order, match=None):
     session.commit()
 
     existing = find_match(order)
-    print(existing.filled)
 
     if existing is not None:
 
@@ -64,6 +63,7 @@ def find_match(order):
 
     for o in potential_matches:
         if o.filled is None:
+            print(o.filled)
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
     return None

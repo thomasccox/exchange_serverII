@@ -22,13 +22,12 @@ def process_order(order, match=None):
 
     if match is not None:
 
-        tstamp = datetime.now()
-        """
-        order_obj.filled = tstamp
-        match.filled = tstamp
         order_obj.counterpart_id = match.id
         match.counterpart_id = order_obj.id
-        
+        tstamp = datetime.now()
+        order_obj.filled = tstamp
+        match.filled = tstamp
+
         if match.buy_amount > order_obj.sell_amount:
             child_buy = match.buy_amount - order_obj.sell_amount
             child_sell = (match.sell_amount / match.buy_amount) * (match.buy_amount - order_obj.sell_amount)
@@ -37,7 +36,7 @@ def process_order(order, match=None):
             child_sell = order_obj.sell_amount - match.buy_amount
             child_buy = (order_obj.sell_amount - match.buy_amount) * (order_obj.buy_amount / order_obj.sell_amount)
             child = order_obj
-            
+
         if match.buy_amount != order_obj.sell_amount:
             child_order = {}
             child_order['creator_id'] = child.id
@@ -53,7 +52,7 @@ def process_order(order, match=None):
             session.add(child_obj)
 
         session.commit()
-    """
+
 
 def find_match(order):
     sell_currency = order['sell_currency']

@@ -24,11 +24,11 @@ def process_order(order, match=None):
 
         order_obj.counterpart_id = existing.id
         existing.counterpart_id = order_obj.id
+        session.commit()
         tstamp = datetime.now()
         order_obj.filled = tstamp
-        if(order_obj.filled == tstamp):
-            print("test")
         existing.filled = tstamp
+        session.commit()
 
         if existing.buy_amount > order_obj.sell_amount:
             child_buy = existing.buy_amount - order_obj.sell_amount

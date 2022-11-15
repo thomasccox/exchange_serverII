@@ -19,13 +19,14 @@ def process_order(order, match=None):
     session.commit()
 
     existing = find_match(order)
+    print(existing.filled)
 
     if existing is not None:
 
         order_obj.counterpart_id = existing.id
         existing.counterpart_id = order_obj.id
         tstamp = datetime.now()
-        print(existing.filled)
+
         #order_obj.filled = tstamp
         #existing.filled = tstamp
 

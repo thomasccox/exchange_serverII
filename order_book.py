@@ -30,32 +30,26 @@ def process_order(order, match=None):
         tstamp = datetime.now()
         order_obj.filled = tstamp
         existing.filled = tstamp
-        #session.commit()
+        session.commit()
 
         if existing.buy_amount > order_obj.sell_amount:
             child_buy = existing.buy_amount - order_obj.sell_amount
             child_sell = (existing.sell_amount / existing.buy_amount) * (existing.buy_amount - order_obj.sell_amount)
             child = existing
+            add_child(child, child_buy, child_sell)
+        """    
         elif existing.buy_amount < order_obj.sell_amount:
             child_sell = order_obj.sell_amount - existing.buy_amount
             child_buy = (order_obj.sell_amount - existing.buy_amount) * (order_obj.buy_amount / order_obj.sell_amount)
             child = order_obj
+        """
+        if order_obj.buy_amount > existing.sell_amount:
+            child_buy = order_obj.buy_amount - existing.sell_amount
+            child_sell = (order_obj.sell_amount / order_obj.buy_amount) * (order_obj.buy_amount - existing.sell_amount)
+            child = order_obj
+            add_child(child, child_buy, child_sell)
 
-        if existing.buy_amount != order_obj.sell_amount:
-            child_order = {}
-            child_order['creator_id'] = child.id
-            child_order['sender_pk'] = child.sender_pk
-            child_order['receiver_pk'] = child.receiver_pk
-            child_order['buy_currency'] = child.buy_currency
-            child_order['sell_currency'] = child.sell_currency
-            child_order['buy_amount'] = child_buy
-            child_order['sell_amount'] = child_sell
-            fields = ['sender_pk', 'receiver_pk', 'buy_currency', 'sell_currency', 'buy_amount', 'sell_amount']
-            child_obj = Order(**{f: child_order[f] for f in fields})
 
-            session.add(child_obj)
-
-        session.commit()
 
 
 def find_match(order):
@@ -69,3 +63,17 @@ def find_match(order):
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
     return None
+
+def add_child(child, buy, sell):
+    child_order = {}
+    child_order['creator_id'] = child.id
+    child_order['sender_pk'] = child.sender_pk
+    child_order['receiver_pk'] = child.receiver_pk
+    child_order['buy_currency'] = child.buy_currency
+    child_order['sell_currency'] = child.sell_currency
+    child_order['buy_amount'] = buy
+    child_order['sell_amount'] = sell
+    fields = ['sender_pk', 'receiver_pk', 'buy_currency', 'sell_currency', 'buy_amount', 'sell_amount']
+    child_obj = Order(**{f: child_order[f] for f in fields})
+    session.add(child_obj)
+    session.commit()

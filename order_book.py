@@ -24,8 +24,8 @@ def process_order(order, match=None):
 
         tstamp = datetime.now()
         order_obj.filled = tstamp
-        match.filled = tstamp
         """
+        match.filled = tstamp
         order_obj.counterpart_id = match.id
         match.counterpart_id = order_obj.id
         

@@ -23,7 +23,7 @@ def process_order(order, match=None):
     if existing is not None:
 
         order_obj.counterpart_id = existing.id
-        order_obj.counterparty[0] = existing
+        order_obj.counterparty[0].append(existing)
         existing.counterpart_id = order_obj.id
         session.commit()
         tstamp = datetime.now()

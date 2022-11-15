@@ -25,8 +25,7 @@ def process_order(order, match=None):
         order_obj.counterpart_id = existing.id
         existing.counterpart_id = order_obj.id
         tstamp = datetime.now()
-
-        #order_obj.filled = tstamp
+        print(order_obj.filled.type())
         #existing.filled = tstamp
 
         if existing.buy_amount > order_obj.sell_amount:
@@ -63,7 +62,6 @@ def find_match(order):
 
     for o in potential_matches:
         if o.filled is None:
-            print(o.filled)
             if o.sell_amount / o.buy_amount >= order['buy_amount'] / order['sell_amount']:
                 return o
     return None
